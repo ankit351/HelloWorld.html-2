@@ -1,2 +1,2 @@
 # HelloWorld.html
-Hello World Example in HTML + CSS
+Example code needed to make your browser display "Hello World!" 
