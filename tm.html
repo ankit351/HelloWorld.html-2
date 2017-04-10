@@ -1,0 +1,114 @@
+<!doctype html>
+<html>
+<head>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+    <h4>Production</h4>
+    <div class="container-responsive">
+        <div class="row">
+            <div class="col">MegaCredit</div>
+            <div class="col"><input type="number" id="productionMegaCredit" class="form-control" min="-5" /></div>
+        </div>
+        <div class="row">
+            <div class="col">Steel</div>
+            <div class="col"><input type="number" id="productionSteel" class="form-control" min="0" /></div>
+        </div>
+        <div class="row">
+            <div class="col">Titanium</div>
+            <div class="col"><input type="number" id="productionTitanium" class="form-control" min="0" /></div>
+        </div>
+        <div class="row">
+            <div class="col">Plant</div>
+            <div class="col"><input type="number" id="productionPlant" class="form-control" min="0" /></div>
+        </div>
+        <div class="row">
+            <div class="col">Power</div>
+            <div class="col"><input type="number" id="productionPower" class="form-control" min="0" /></div>
+        </div>
+        <div class="row">
+            <div class="col">Heat</div>
+            <div class="col"><input type="number" id="productionHeat" class="form-control" min="0" /></div>
+        </div>
+    </div>
+
+    <h4>Resources</h4>
+
+    <div class="container-responsive">
+        <div class="row">
+            <div class="col">MegaCredit</div>
+            <div class="col"><input type="number" id="currentMegaCredit" class="form-control" min="0" /></div>
+        </div>
+        <div class="row">
+            <div class="col">Steel</div>
+            <div class="col"><input type="number" id="currentSteel" class="form-control" min="0" /></div>
+        </div>
+        <div class="row">
+            <div class="col">Titanium</div>
+            <div class="col"><input type="number" id="currentTitanium" class="form-control" min="0" /></div>
+        </div>
+        <div class="row">
+            <div class="col">Plant</div>
+            <div class="col"><input type="number" id="currentPlant" class="form-control" min="0" /></div>
+        </div>
+        <div class="row">
+            <div class="col">Energy</div>
+            <div class="col"><input type="number" id="currentPower" class="form-control" min="0" /></div>
+        </div>
+        <div class="row">
+            <div class="col">Heat</div>
+            <div class="col"><input type="number" id="currentHeat" class="form-control" min="0" /></div>
+        </div>
+        <hr/>
+        <div class="row">
+            <div class="col"><button type="button" class="btn btn-primary btn-block" onclick="nextGen();">Next Gen</button></div>
+        </div>
+        <hr/>
+        <div class="row">
+            <div class="col"><button type="button" class="btn btn-primary btn-block" onclick="prevGen();">Prev Gen</button></div>
+        </div>
+    </div>
+    <script>
+    if (!localStorage.values)
+    {
+        localStorage.values = "{}";
+    }
+    var map = ["MegaCredit", "Steel", "Titanium", "Plant", "Power", "Heat"];
+    var vals = JSON.parse(localStorage.values);
+    document.addEventListener('DOMContentLoaded', function () {
+        update();
+    });
+    document.addEventListener('change', function (e) {
+        var id = e.target.id;
+        vals[id] = e.target.value;
+        save();
+    });
+    var update = function () {
+        map.forEach((i) => {
+            var el = document.getElementById("current" + i);
+            el.value = parseInt(vals["current" + i] || 0);
+            var el = document.getElementById("production" + i);
+            el.value = parseInt(vals["production" + i] || 0);
+        });
+    };
+    var save = function () {
+        localStorage.values = JSON.stringify(vals);
+    };
+    var nextGen = function () {
+        map.forEach((i) => {
+            vals["current" + i] = parseInt(vals["current" + i] || 0, 10) + parseInt(vals["production" + i] || 0, 10);
+        });
+        update();
+        save();
+    };
+    var prevGen = function () {
+        map.forEach((i) => {
+            vals["current" + i] = parseInt(vals["current" + i] || 0, 10) - parseInt(vals["production" + i] || 0, 10);
+        });
+        update();
+        save();
+    };
+    </script>
+</body>
+</html>
