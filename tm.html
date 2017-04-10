@@ -155,13 +155,13 @@
             var c = e.target.closest("div.row");
             var id = c.dataset.type;
             vals[id] = parseInt(vals[id] || 0, 10) + parseInt(e.target.dataset.btn, 10);
-            c.querySelector("input").value = vals[id];
+            c.querySelector("input").value = parseInt(vals[id], 10);
             save();
         }
     });
     document.addEventListener('change', function (e) {
         var id = e.target.closest("div.row").getAttribute("data-type");
-        vals[id] = e.target.value;
+        vals[id] = parseInt(e.target.value, 10);
         save();
     });
     var update = function () {
